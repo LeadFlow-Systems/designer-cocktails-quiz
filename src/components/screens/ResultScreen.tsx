@@ -73,8 +73,6 @@ function ResultHeader({ phase, personality }: { phase: string; personality: Pers
       animate={phase !== 'burst' ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
       transition={{ type: 'spring', stiffness: 180, damping: 14 }}
     >
-      <div className="absolute -top-20 -right-20 w-60 h-60 rounded-full opacity-20 blur-3xl" style={{ background: personality.color }} />
-      <div className="absolute -bottom-20 -left-20 w-40 h-40 rounded-full opacity-15 blur-3xl" style={{ background: personality.color }} />
 
       <motion.p
         className="text-sm font-bold uppercase tracking-[0.2em] text-text-muted mb-2 font-[family-name:var(--font-display)] relative z-10"
@@ -117,16 +115,14 @@ function ResultHeader({ phase, personality }: { phase: string; personality: Pers
 }
 
 function ResultDetails({ personality, onRestart }: ResultScreenProps) {
-  const handleTweet = () => {
-    const text = "I am " + personality.name + " - take the cocktail personality quiz!"
-    const url = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(text) + '&url=' + encodeURIComponent(window.location.href)
-    window.open(url, '_blank')
+  const handleInstagram = () => {
+    window.open('https://www.instagram.com/designercocktailsuk/', '_blank')
   }
 
   return (
     <>
       <motion.div
-        className="w-full bg-white/70 backdrop-blur-sm rounded-2xl p-6 sm:p-8 mb-6 shadow-sm border border-border-light relative z-10"
+        className="w-full bg-white/70 rounded-2xl p-6 sm:p-8 mb-6 shadow-sm border border-border-light relative z-10"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -145,7 +141,7 @@ function ResultDetails({ personality, onRestart }: ResultScreenProps) {
         {personality.traits.map((trait) => (
           <motion.div
             key={trait}
-            className="bg-white/80 backdrop-blur-sm border border-border-light rounded-2xl px-4 py-4 text-center shadow-sm"
+            className="bg-white/80 border border-border-light rounded-2xl px-4 py-4 text-center shadow-sm"
             variants={fadeInUp}
           >
             <span className="text-sm sm:text-base text-text-dark font-semibold font-[family-name:var(--font-body)]">
@@ -210,7 +206,7 @@ function ResultDetails({ personality, onRestart }: ResultScreenProps) {
         <p className="text-text-muted text-sm text-center mb-3 font-[family-name:var(--font-body)]">Share your result</p>
         <div className="flex gap-3 justify-center">
           <ShareButton label="Copy Link" onClick={() => navigator.clipboard.writeText(window.location.href)} />
-          <ShareButton label="Share on X" onClick={handleTweet} />
+          <ShareButton label="Follow on Instagram" onClick={handleInstagram} />
         </div>
       </motion.div>
 
@@ -225,7 +221,7 @@ function ShareButton({ label, onClick }: { label: string; onClick: () => void })
   return (
     <motion.button
       onClick={onClick}
-      className="flex items-center gap-2 bg-white/80 backdrop-blur-sm border border-border-light rounded-xl px-5 py-3 text-text-body text-sm font-medium hover:border-teal hover:text-teal cursor-pointer transition-all duration-200 font-[family-name:var(--font-body)] shadow-sm"
+      className="flex items-center gap-2 bg-white/80 border border-border-light rounded-xl px-5 py-3 text-text-body text-sm font-medium hover:border-teal hover:text-teal cursor-pointer transition-all duration-200 font-[family-name:var(--font-body)] shadow-sm"
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
     >

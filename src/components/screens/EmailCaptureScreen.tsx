@@ -96,7 +96,7 @@ export function EmailCaptureScreen({
             placeholder="First name (optional)"
             value={firstName}
             onChange={(e) => onFirstNameChange(e.target.value)}
-            className="w-full bg-white/80 backdrop-blur-sm border-2 border-border-light rounded-2xl px-5 py-4 text-text-dark placeholder-text-muted text-base font-[family-name:var(--font-body)] outline-none focus:border-teal transition-colors duration-200 shadow-sm"
+            className="w-full bg-white/90 border-2 border-border-light rounded-2xl px-5 py-4 text-text-dark placeholder-text-muted text-base font-[family-name:var(--font-body)] outline-none focus:border-teal transition-colors duration-200 shadow-sm"
           />
         </div>
 
@@ -110,7 +110,7 @@ export function EmailCaptureScreen({
               onEmailChange(e.target.value)
               if (emailError) setEmailError('')
             }}
-            className={`w-full bg-white/80 backdrop-blur-sm border-2 rounded-2xl px-5 py-4 text-text-dark placeholder-text-muted text-base font-[family-name:var(--font-body)] outline-none transition-colors duration-200 shadow-sm ${
+            className={`w-full bg-white/90 border-2 rounded-2xl px-5 py-4 text-text-dark placeholder-text-muted text-base font-[family-name:var(--font-body)] outline-none transition-colors duration-200 shadow-sm ${
               emailError
                 ? 'border-pink focus:border-pink'
                 : 'border-border-light focus:border-teal'

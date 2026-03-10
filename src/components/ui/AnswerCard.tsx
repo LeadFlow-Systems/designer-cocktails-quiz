@@ -24,11 +24,11 @@ export function AnswerCard({
         relative w-full text-left rounded-2xl p-5 sm:p-6 cursor-pointer
         border-2 transition-all duration-200
         font-[family-name:var(--font-body)]
-        backdrop-blur-sm
+        
         ${
           isSelected
             ? 'bg-gradient-to-br from-teal/15 to-pink/10 border-teal shadow-lg shadow-teal/15'
-            : 'bg-white/80 border-white/60 hover:border-teal/40 hover:shadow-md shadow-sm'
+            : 'bg-white/90 border-white/60 hover:border-teal/40 hover:shadow-md shadow-sm'
         }
       `}
       animate={
