@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import type { Personality } from '@/types/quiz'
 import { QuizButton } from '@/components/ui/QuizButton'
 import { staggerContainer, fadeInUp } from '@/utils/animations'
+import { analytics } from '@/lib/analytics'
 
 interface ResultScreenProps {
   personality: Personality
@@ -115,8 +116,24 @@ function ResultHeader({ phase, personality }: { phase: string; personality: Pers
 }
 
 function ResultDetails({ personality, onRestart }: ResultScreenProps) {
+  const handleShop = () => {
+    analytics.shopClicked(personality.name)
+    window.open('https://designercocktails.co.uk/product/canned-cocktails-bundle/', '_blank')
+  }
+
+  const handleRetake = () => {
+    analytics.retakeClicked()
+    onRestart()
+  }
+
   const handleInstagram = () => {
+    analytics.shareClicked('instagram')
     window.open('https://www.instagram.com/designercocktailsuk/', '_blank')
+  }
+
+  const handleCopyLink = () => {
+    analytics.shareClicked('copy_link')
+    navigator.clipboard.writeText(window.location.href)
   }
 
   return (
@@ -191,13 +208,10 @@ function ResultDetails({ personality, onRestart }: ResultScreenProps) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.5 }}
       >
-        <QuizButton
-          onClick={() => window.open('https://designercocktails.co.uk', '_blank')}
-          className="flex-1"
-        >
+        <QuizButton onClick={handleShop} className="flex-1">
           Shop Your Match
         </QuizButton>
-        <QuizButton variant="secondary" onClick={onRestart} className="flex-1">
+        <QuizButton variant="secondary" onClick={handleRetake} className="flex-1">
           Take It Again
         </QuizButton>
       </motion.div>
@@ -205,7 +219,7 @@ function ResultDetails({ personality, onRestart }: ResultScreenProps) {
       <motion.div className="mt-8 relative z-10" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7 }}>
         <p className="text-text-muted text-sm text-center mb-3 font-[family-name:var(--font-body)]">Share your result</p>
         <div className="flex gap-3 justify-center">
-          <ShareButton label="Copy Link" onClick={() => navigator.clipboard.writeText(window.location.href)} />
+          <ShareButton label="Copy Link" onClick={handleCopyLink} />
           <ShareButton label="Follow on Instagram" onClick={handleInstagram} />
         </div>
       </motion.div>

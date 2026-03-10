@@ -1,8 +1,10 @@
+import { useEffect, useRef } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useQuizState } from '@/hooks/useQuizState'
 import { questions } from '@/data/questions'
 import { personalities } from '@/data/personalities'
 import { submitQuizResult } from '@/lib/email'
+import { analytics } from '@/lib/analytics'
 import { BubbleBackground } from '@/components/ui/BubbleBackground'
 import { WelcomeScreen } from '@/components/screens/WelcomeScreen'
 import { QuestionScreen } from '@/components/screens/QuestionScreen'
@@ -22,6 +24,32 @@ function App() {
     submitEmailError,
     restart,
   } = useQuizState()
+
+  // Track screen changes
+  const prevScreen = useRef(state.screen)
+  const prevQuestion = useRef(state.currentQuestion)
+  useEffect(() => {
+    if (state.screen === 'question' && state.currentQuestion !== prevQuestion.current) {
+      analytics.questionAnswered(prevQuestion.current)
+      analytics.questionViewed(state.currentQuestion)
+      prevQuestion.current = state.currentQuestion
+    }
+    if (state.screen !== prevScreen.current) {
+      if (state.screen === 'question' && prevScreen.current === 'welcome') {
+        analytics.quizStarted()
+        analytics.questionViewed(0)
+      }
+      if (state.screen === 'email') {
+        analytics.questionAnswered(state.currentQuestion)
+        analytics.emailScreenViewed()
+      }
+      if (state.screen === 'result' && state.result) {
+        const p = personalities[state.result]
+        analytics.quizCompleted(p.name, p.matchedDrink)
+      }
+      prevScreen.current = state.screen
+    }
+  }, [state.screen, state.currentQuestion, state.result])
 
   const handleEmailSubmit = async () => {
     if (!state.result) return
