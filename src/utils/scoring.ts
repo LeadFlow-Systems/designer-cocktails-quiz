@@ -1,22 +1,24 @@
 import type { PersonalityId, SelectedAnswer } from '@/types/quiz'
 
 const ALL_PERSONALITIES: PersonalityId[] = [
-  'life-of-the-party',
-  'sophisticate',
-  'wild-card',
-  'chill-one',
-  'main-character',
-  'secret-weapon',
+  'french-martini',
+  'pornstar-martini',
+  'espresso-martini',
+  'pineapple-paradise',
+  'watermelon-cosmo',
+  'strawberry-woo-woo',
+  'peach-cobbler',
 ]
 
 export function calculatePersonality(answers: SelectedAnswer[]): PersonalityId {
   const scores: Record<PersonalityId, number> = {
-    'life-of-the-party': 0,
-    'sophisticate': 0,
-    'wild-card': 0,
-    'chill-one': 0,
-    'main-character': 0,
-    'secret-weapon': 0,
+    'french-martini': 0,
+    'pornstar-martini': 0,
+    'espresso-martini': 0,
+    'pineapple-paradise': 0,
+    'watermelon-cosmo': 0,
+    'strawberry-woo-woo': 0,
+    'peach-cobbler': 0,
   }
 
   for (const answer of answers) {

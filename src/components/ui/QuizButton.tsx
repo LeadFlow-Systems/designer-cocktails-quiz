@@ -18,15 +18,15 @@ export function QuizButton({
   className = '',
 }: QuizButtonProps) {
   const baseStyles =
-    'relative font-semibold rounded-xl cursor-pointer transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed font-[family-name:var(--font-body)]'
+    'relative font-semibold rounded-2xl cursor-pointer transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed font-[family-name:var(--font-display)]'
 
   const variants = {
     primary:
-      'bg-teal text-white px-8 py-4 text-base shadow-[0_0_20px_rgba(0,184,195,0.2)] hover:shadow-[0_0_30px_rgba(0,184,195,0.35)]',
+      'bg-gradient-to-r from-teal to-[#00d4d4] text-white px-8 py-4 text-lg shadow-lg shadow-teal/20 hover:shadow-xl hover:shadow-teal/30',
     secondary:
-      'bg-dark-card text-text-light border border-border-dark px-8 py-4 text-base hover:border-teal hover:text-white',
+      'bg-white text-text-dark border-2 border-border-light px-8 py-4 text-lg hover:border-teal hover:text-teal shadow-sm',
     ghost:
-      'bg-transparent text-text-muted px-4 py-2 text-sm hover:text-white',
+      'bg-transparent text-text-muted px-4 py-2 text-sm hover:text-teal',
   }
 
   return (

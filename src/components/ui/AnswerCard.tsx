@@ -21,43 +21,48 @@ export function AnswerCard({
       variants={answerCardVariant}
       onClick={onClick}
       className={`
-        relative w-full text-left rounded-2xl p-5 cursor-pointer
-        border transition-colors duration-200
+        relative w-full text-left rounded-2xl p-5 sm:p-6 cursor-pointer
+        border-2 transition-all duration-200
         font-[family-name:var(--font-body)]
+        backdrop-blur-sm
         ${
           isSelected
-            ? 'bg-teal/15 border-teal shadow-[0_0_25px_rgba(0,184,195,0.25)]'
-            : 'bg-dark-surface border-border-dark hover:border-teal-glow'
+            ? 'bg-gradient-to-br from-teal/15 to-pink/10 border-teal shadow-lg shadow-teal/15'
+            : 'bg-white/80 border-white/60 hover:border-teal/40 hover:shadow-md shadow-sm'
         }
       `}
       animate={
         isOtherSelected
-          ? { opacity: 0.3, scale: 0.95 }
+          ? { opacity: 0.4, scale: 0.97 }
           : isSelected
             ? { scale: 1.02 }
             : { opacity: 1, scale: 1 }
       }
       whileHover={
-        !isSelected && !isOtherSelected ? { scale: 1.02 } : undefined
+        !isSelected && !isOtherSelected ? { scale: 1.02, y: -2 } : undefined
       }
       whileTap={!isSelected && !isOtherSelected ? { scale: 0.97 } : undefined}
       transition={{ type: 'spring', stiffness: 400, damping: 25 }}
     >
       <div className="flex items-center gap-4">
-        <span className="text-2xl flex-shrink-0">{emoji}</span>
+        <span className="text-3xl flex-shrink-0">{emoji}</span>
         <span
-          className={`text-sm sm:text-base font-medium ${isSelected ? 'text-white' : 'text-text-light'}`}
+          className={`text-base sm:text-lg font-medium leading-snug ${isSelected ? 'text-text-dark' : 'text-text-body'}`}
         >
           {text}
         </span>
       </div>
       {isSelected && (
         <motion.div
-          className="absolute inset-0 rounded-2xl border-2 border-teal pointer-events-none"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.2 }}
-        />
+          className="absolute top-3 right-3 w-6 h-6 rounded-full bg-teal flex items-center justify-center"
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ type: 'spring', stiffness: 500, damping: 15 }}
+        >
+          <svg className="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+          </svg>
+        </motion.div>
       )}
     </motion.button>
   )

@@ -1,61 +1,66 @@
 import { motion } from 'motion/react'
 import { useMemo } from 'react'
 
-interface Bubble {
+interface Blob {
   id: number
   size: number
-  left: string
-  delay: number
-  duration: number
+  x: string
+  y: string
+  color: string
   opacity: number
+  duration: number
+  delay: number
 }
 
+const COLORS = [
+  'rgba(0, 184, 195, 0.15)',   // teal
+  'rgba(246, 130, 196, 0.12)', // pink
+  'rgba(203, 108, 235, 0.10)', // purple
+  'rgba(249, 115, 22, 0.08)',  // orange
+  'rgba(45, 212, 191, 0.10)',  // mint
+]
+
 export function BubbleBackground() {
-  const bubbles = useMemo<Bubble[]>(() => {
-    return Array.from({ length: 18 }, (_, i) => ({
+  const blobs = useMemo<Blob[]>(() => {
+    return Array.from({ length: 6 }, (_, i) => ({
       id: i,
-      size: 6 + Math.random() * 30,
-      left: `${Math.random() * 100}%`,
-      delay: Math.random() * 8,
-      duration: 10 + Math.random() * 15,
-      opacity: 0.08 + Math.random() * 0.15,
+      size: 250 + Math.random() * 350,
+      x: `${10 + Math.random() * 80}%`,
+      y: `${10 + Math.random() * 80}%`,
+      color: COLORS[i % COLORS.length],
+      opacity: 0.6 + Math.random() * 0.4,
+      duration: 15 + Math.random() * 10,
+      delay: Math.random() * 5,
     }))
   }, [])
 
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-      {bubbles.map((bubble) => (
+      {blobs.map((blob) => (
         <motion.div
-          key={bubble.id}
-          className="absolute rounded-full"
+          key={blob.id}
+          className="absolute rounded-full blur-3xl"
           style={{
-            width: bubble.size,
-            height: bubble.size,
-            left: bubble.left,
-            bottom: -bubble.size,
-            background: `radial-gradient(circle, rgba(0, 184, 195, ${bubble.opacity}) 0%, transparent 70%)`,
+            width: blob.size,
+            height: blob.size,
+            left: blob.x,
+            top: blob.y,
+            background: `radial-gradient(circle, ${blob.color} 0%, transparent 70%)`,
+            transform: 'translate(-50%, -50%)',
           }}
           animate={{
-            y: [0, -window.innerHeight - bubble.size * 2],
-            opacity: [0, bubble.opacity, 0],
+            x: [0, 30, -20, 0],
+            y: [0, -25, 15, 0],
+            scale: [1, 1.1, 0.95, 1],
           }}
           transition={{
-            duration: bubble.duration,
+            duration: blob.duration,
             repeat: Infinity,
-            delay: bubble.delay,
-            ease: 'linear',
+            delay: blob.delay,
+            ease: 'easeInOut',
           }}
         />
       ))}
-
-      {/* Subtle teal glow orb in center */}
-      <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full opacity-[0.06]"
-        style={{
-          background:
-            'radial-gradient(circle, rgba(0, 184, 195, 0.4) 0%, transparent 70%)',
-        }}
-      />
     </div>
   )
 }

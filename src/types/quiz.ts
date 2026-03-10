@@ -1,10 +1,11 @@
 export type PersonalityId =
-  | 'life-of-the-party'
-  | 'sophisticate'
-  | 'wild-card'
-  | 'chill-one'
-  | 'main-character'
-  | 'secret-weapon'
+  | 'french-martini'
+  | 'pornstar-martini'
+  | 'espresso-martini'
+  | 'pineapple-paradise'
+  | 'watermelon-cosmo'
+  | 'strawberry-woo-woo'
+  | 'peach-cobbler'
 
 export interface Answer {
   id: string
@@ -28,6 +29,7 @@ export interface Personality {
   emoji: string
   traits: string[]
   matchedDrink: string
+  image: string
 }
 
 export interface SelectedAnswer {

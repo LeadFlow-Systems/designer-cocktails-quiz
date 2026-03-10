@@ -52,10 +52,10 @@ function App() {
       : state.screen
 
   return (
-    <div className="relative min-h-screen bg-dark">
+    <div className="relative min-h-screen">
       <BubbleBackground />
 
-      <div className="relative z-10 min-h-screen flex items-center justify-center">
+      <div className="relative z-10 min-h-screen flex items-center justify-center py-8">
         <AnimatePresence mode="wait">
           <motion.div
             key={screenKey}

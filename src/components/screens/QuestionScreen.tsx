@@ -39,7 +39,7 @@ export function QuestionScreen({
   )
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[80vh] px-6 w-full max-w-lg mx-auto">
+    <div className="flex flex-col items-center justify-center min-h-[85vh] px-6 w-full max-w-xl mx-auto">
       {/* Progress */}
       <motion.div
         className="w-full mb-8"
@@ -52,7 +52,7 @@ export function QuestionScreen({
 
       {/* Question text */}
       <motion.h2
-        className="font-[family-name:var(--font-display)] text-2xl sm:text-3xl font-bold text-white text-center mb-8 leading-tight"
+        className="font-[family-name:var(--font-display)] text-2xl sm:text-3xl font-bold text-text-dark text-center mb-8 leading-tight"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, ease: 'easeOut', delay: 0.1 }}
@@ -60,9 +60,9 @@ export function QuestionScreen({
         {question.text}
       </motion.h2>
 
-      {/* Answer cards */}
+      {/* Answer cards - single column for easier reading */}
       <motion.div
-        className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full"
+        className="flex flex-col gap-3 w-full"
         variants={staggerContainer}
         initial="hidden"
         animate="visible"

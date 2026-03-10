@@ -39,10 +39,10 @@ export function EmailCaptureScreen({
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[80vh] px-6 w-full max-w-md mx-auto">
+    <div className="flex flex-col items-center justify-center min-h-[85vh] px-6 w-full max-w-md mx-auto">
       {/* Mystery cocktail icon */}
       <motion.div
-        className="text-5xl sm:text-6xl mb-6"
+        className="text-6xl sm:text-7xl mb-6"
         initial={{ opacity: 0, scale: 0.5 }}
         animate={{
           opacity: 1,
@@ -53,24 +53,26 @@ export function EmailCaptureScreen({
           scale: { duration: 2, repeat: Infinity, ease: 'easeInOut' },
         }}
       >
-        🔮
+        🍸
       </motion.div>
 
       {/* Headline */}
       <motion.h2
-        className="font-[family-name:var(--font-display)] text-2xl sm:text-3xl font-bold text-white text-center mb-3 leading-tight"
+        className="font-[family-name:var(--font-display)] text-3xl sm:text-4xl font-bold text-text-dark text-center mb-3 leading-tight"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
       >
         Your cocktail personality
         <br />
-        <span className="text-teal">is ready...</span>
+        <span className="bg-gradient-to-r from-teal to-pink bg-clip-text text-transparent">
+          is ready...
+        </span>
       </motion.h2>
 
       {/* Subheadline */}
       <motion.p
-        className="text-text-light text-sm sm:text-base text-center mb-8 font-[family-name:var(--font-body)]"
+        className="text-text-body text-base sm:text-lg text-center mb-8 font-[family-name:var(--font-body)]"
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, delay: 0.4 }}
@@ -94,7 +96,7 @@ export function EmailCaptureScreen({
             placeholder="First name (optional)"
             value={firstName}
             onChange={(e) => onFirstNameChange(e.target.value)}
-            className="w-full bg-dark-surface border border-border-dark rounded-xl px-5 py-4 text-white placeholder-text-muted text-base font-[family-name:var(--font-body)] outline-none focus:border-teal transition-colors duration-200"
+            className="w-full bg-white/80 backdrop-blur-sm border-2 border-border-light rounded-2xl px-5 py-4 text-text-dark placeholder-text-muted text-base font-[family-name:var(--font-body)] outline-none focus:border-teal transition-colors duration-200 shadow-sm"
           />
         </div>
 
@@ -108,15 +110,15 @@ export function EmailCaptureScreen({
               onEmailChange(e.target.value)
               if (emailError) setEmailError('')
             }}
-            className={`w-full bg-dark-surface border rounded-xl px-5 py-4 text-white placeholder-text-muted text-base font-[family-name:var(--font-body)] outline-none transition-colors duration-200 ${
+            className={`w-full bg-white/80 backdrop-blur-sm border-2 rounded-2xl px-5 py-4 text-text-dark placeholder-text-muted text-base font-[family-name:var(--font-body)] outline-none transition-colors duration-200 shadow-sm ${
               emailError
                 ? 'border-pink focus:border-pink'
-                : 'border-border-dark focus:border-teal'
+                : 'border-border-light focus:border-teal'
             }`}
           />
           {emailError && (
             <motion.p
-              className="text-pink text-xs mt-2 ml-1 font-[family-name:var(--font-body)]"
+              className="text-pink text-sm mt-2 ml-1 font-medium font-[family-name:var(--font-body)]"
               initial={{ opacity: 0, y: -5 }}
               animate={{ opacity: 1, y: 0 }}
             >
@@ -134,7 +136,7 @@ export function EmailCaptureScreen({
           {isSubmitting ? (
             <span className="flex items-center justify-center gap-2">
               <motion.span
-                className="inline-block w-4 h-4 border-2 border-white/30 border-t-white rounded-full"
+                className="inline-block w-5 h-5 border-2 border-white/30 border-t-white rounded-full"
                 animate={{ rotate: 360 }}
                 transition={{ duration: 0.8, repeat: Infinity, ease: 'linear' }}
               />
@@ -146,7 +148,7 @@ export function EmailCaptureScreen({
         </QuizButton>
 
         {/* Trust text */}
-        <p className="text-text-muted text-xs text-center font-[family-name:var(--font-body)]">
+        <p className="text-text-muted text-sm text-center font-[family-name:var(--font-body)]">
           No spam. Just good vibes and cocktail news.
         </p>
       </motion.form>
