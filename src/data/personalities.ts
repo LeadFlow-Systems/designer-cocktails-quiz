@@ -3,7 +3,7 @@ import type { Personality, PersonalityId } from '@/types/quiz'
 export const personalities: Record<PersonalityId, Personality> = {
   'french-martini': {
     id: 'french-martini',
-    name: 'French Martini',
+    name: 'The Fancy One',
     tagline: 'Elegant and sophisticated... aye right.',
     description:
       "You like to think you're all class and elegance, but let's be honest. You'll order a Sauvignon Blanc please — even though it took you a year to pronounce it properly. Pinky up, standards questionable.",
@@ -20,7 +20,7 @@ export const personalities: Record<PersonalityId, Personality> = {
   },
   'pornstar-martini': {
     id: 'pornstar-martini',
-    name: 'Pornstar Martini',
+    name: 'The Party Animal',
     tagline: 'First up dancing, first in their bed.',
     description:
       "You're the designated party animal of the group and everyone knows it. First on the dance floor, last to remember what happened. The hangovers are brutal and the fear is real, but you'll do it all again next weekend.",
@@ -37,7 +37,7 @@ export const personalities: Record<PersonalityId, Personality> = {
   },
   'espresso-martini': {
     id: 'espresso-martini',
-    name: 'Espresso Martini',
+    name: 'The Dark Horse',
     tagline: "It's always the quiet ones.",
     description:
       "You sit back, relax, and watch everyone else make a fool of themselves. But then 14 cocktails deep and suddenly you're up on the tables leading a conga line. Nobody saw it coming. They never do.",
@@ -54,7 +54,7 @@ export const personalities: Record<PersonalityId, Personality> = {
   },
   'pineapple-paradise': {
     id: 'pineapple-paradise',
-    name: 'Pineapple Paradise',
+    name: 'The Beach Bum',
     tagline: 'Living the dream, one sunbed at a time.',
     description:
       "You love the finer things in life — lying on a beach with a Piña Colada or a Strawberry Daiquiri in hand. But let's be honest, you're also sneaking off for a cheeky sunbed four times a week. Bougie on a budget.",
@@ -71,7 +71,7 @@ export const personalities: Record<PersonalityId, Personality> = {
   },
   'watermelon-cosmo': {
     id: 'watermelon-cosmo',
-    name: 'Watermelon Cosmo',
+    name: 'The Beautiful Disaster',
     tagline: 'Arrived at brunch looking posh. Left in a bush.',
     description:
       "You think you're dead posh, turning up looking all elegant and put together. But let's face it — you arrive at a brunch and somehow end up in a bush missing your shoes. Classy on arrival, carnage by dessert.",
@@ -88,7 +88,7 @@ export const personalities: Record<PersonalityId, Personality> = {
   },
   'strawberry-woo-woo': {
     id: 'strawberry-woo-woo',
-    name: 'Strawberry Woo Woo',
+    name: 'The Day Drinker',
     tagline: "It's 5 o'clock somewhere.",
     description:
       "Fun, flirty, and always up for a drink — or seven. You're partial to an occasional Lambrini and you're always the first one to suggest getting back on it the next day. Your favourite line? It's 5 o'clock somewhere.",
@@ -105,7 +105,7 @@ export const personalities: Record<PersonalityId, Personality> = {
   },
   'peach-cobbler': {
     id: 'peach-cobbler',
-    name: 'Peach Cobbler',
+    name: 'The Straight Talker',
     tagline: 'Strong, no nonsense, and partial to a pint.',
     description:
       "You're strong, you pack a punch, and you put up with absolutely no nonsense. You're also partial to a pint of Guinness or a cold beer. No drama, no fuss — just straight talking and good times.",
