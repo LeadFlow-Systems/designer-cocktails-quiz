@@ -13,12 +13,29 @@ export interface QuizSubmissionPayload {
 export async function submitQuizResult(
   payload: QuizSubmissionPayload
 ): Promise<{ success: boolean; error?: string }> {
-  // MVP: Log to console. Replace with Go High Level API integration later.
-  // GHL endpoint: POST /contacts with custom fields for personality data
-  console.log('[Quiz Submission]', payload)
+  const webhookUrl =
+    'https://services.leadconnectorhq.com/hooks/00KWHjPgKJJvH1gAZ9Li/webhook-trigger/5b983f24-e7bb-4cf8-bdbe-a3e91f8ca5e9'
 
-  // Simulate network delay for realistic UX
-  await new Promise((resolve) => setTimeout(resolve, 800))
+  try {
+    const response = await fetch(webhookUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        firstName: payload.firstName || '',
+        email: payload.email,
+        personalityName: payload.personalityName,
+        matchedDrink: payload.matchedDrink,
+      }),
+    })
 
-  return { success: true }
+    if (!response.ok) {
+      console.error('[Quiz Submission] Webhook error:', response.status)
+      return { success: false, error: 'Submission failed. Please try again.' }
+    }
+
+    return { success: true }
+  } catch (error) {
+    console.error('[Quiz Submission] Network error:', error)
+    return { success: false, error: 'Network error. Please try again.' }
+  }
 }
