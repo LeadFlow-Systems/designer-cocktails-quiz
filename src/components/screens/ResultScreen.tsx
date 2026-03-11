@@ -146,7 +146,7 @@ function ResultDetails({ personality, onRestart }: ResultScreenProps) {
       if (navigator.share && navigator.canShare?.({ files: [file] })) {
         analytics.shareClicked('native')
         await navigator.share({
-          text: `I'm "${personality.name}" — find your cocktail personality!`,
+          text: `I'm "${personality.name}" — find your cocktail personality!\n\nhttps://web.designercocktails.co.uk`,
           files: [file],
         })
       } else {
