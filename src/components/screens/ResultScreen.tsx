@@ -1,5 +1,6 @@
 import { motion } from 'motion/react'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import html2canvas from 'html2canvas'
 import type { Personality } from '@/types/quiz'
 import { QuizButton } from '@/components/ui/QuizButton'
 import { staggerContainer, fadeInUp } from '@/utils/animations'
@@ -116,6 +117,57 @@ function ResultHeader({ phase, personality }: { phase: string; personality: Pers
 }
 
 function ResultDetails({ personality, onRestart }: ResultScreenProps) {
+  const shareCardRef = useRef<HTMLDivElement>(null)
+  const [isSharing, setIsSharing] = useState(false)
+
+  const handleShare = async () => {
+    if (!shareCardRef.current || isSharing) return
+    setIsSharing(true)
+
+    try {
+      const canvas = await html2canvas(shareCardRef.current, {
+        scale: 2,
+        backgroundColor: '#ffffff',
+        useCORS: true,
+        logging: false,
+      })
+
+      const blob = await new Promise<Blob | null>((resolve) =>
+        canvas.toBlob(resolve, 'image/png')
+      )
+
+      if (!blob) {
+        setIsSharing(false)
+        return
+      }
+
+      const file = new File([blob], 'my-cocktail-personality.png', { type: 'image/png' })
+
+      if (navigator.share && navigator.canShare?.({ files: [file] })) {
+        analytics.shareClicked('native')
+        await navigator.share({
+          text: `I'm "${personality.name}" — find your cocktail personality!`,
+          files: [file],
+        })
+      } else {
+        analytics.shareClicked('download')
+        const url = URL.createObjectURL(blob)
+        const a = document.createElement('a')
+        a.href = url
+        a.download = 'my-cocktail-personality.png'
+        a.click()
+        URL.revokeObjectURL(url)
+      }
+    } catch (err) {
+      // User cancelled share sheet — not an error
+      if (err instanceof Error && err.name !== 'AbortError') {
+        console.error('Share failed:', err)
+      }
+    } finally {
+      setIsSharing(false)
+    }
+  }
+
   const handleShop = () => {
     analytics.shopClicked()
     window.open('https://designercocktails.co.uk/product/canned-cocktails-bundle/', '_blank')
@@ -125,18 +177,13 @@ function ResultDetails({ personality, onRestart }: ResultScreenProps) {
     onRestart()
   }
 
-  const handleInstagram = () => {
-    analytics.shareClicked('instagram')
-    window.open('https://www.instagram.com/designercocktailsuk/', '_blank')
-  }
-
-  const handleCopyLink = () => {
-    analytics.shareClicked('copy_link')
-    navigator.clipboard.writeText(window.location.href)
-  }
-
   return (
     <>
+      {/* Hidden share card — rendered off-screen for capture */}
+      <div style={{ position: 'absolute', left: '-9999px', top: 0 }}>
+        <ShareCard ref={shareCardRef} personality={personality} />
+      </div>
+
       <motion.div
         className="w-full bg-white/70 rounded-2xl p-6 sm:p-8 mb-6 shadow-sm border border-border-light relative z-10"
         initial={{ opacity: 0, y: 20 }}
@@ -215,12 +262,18 @@ function ResultDetails({ personality, onRestart }: ResultScreenProps) {
         </QuizButton>
       </motion.div>
 
-      <motion.div className="mt-8 relative z-10" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.7 }}>
-        <p className="text-text-muted text-sm text-center mb-3 font-[family-name:var(--font-body)]">Share your result</p>
-        <div className="flex gap-3 justify-center">
-          <ShareButton label="Copy Link" onClick={handleCopyLink} />
-          <ShareButton label="Follow on Instagram" onClick={handleInstagram} />
-        </div>
+      <motion.div
+        className="flex gap-3 w-full mt-4 relative z-10"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.6 }}
+      >
+        <QuizButton variant="secondary" onClick={handleShare} className="flex-1" disabled={isSharing}>
+          {isSharing ? 'Creating...' : 'Share My Result'}
+        </QuizButton>
+        <QuizButton variant="secondary" onClick={() => window.open('https://www.instagram.com/designercocktailsuk/', '_blank')} className="flex-1">
+          Follow Us
+        </QuizButton>
       </motion.div>
 
       <motion.div className="mt-8 relative z-10" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.9 }}>
@@ -230,15 +283,128 @@ function ResultDetails({ personality, onRestart }: ResultScreenProps) {
   )
 }
 
-function ShareButton({ label, onClick }: { label: string; onClick: () => void }) {
-  return (
-    <motion.button
-      onClick={onClick}
-      className="flex items-center gap-2 bg-white/80 border border-border-light rounded-xl px-5 py-3 text-text-body text-sm font-medium hover:border-teal hover:text-teal cursor-pointer transition-all duration-200 font-[family-name:var(--font-body)] shadow-sm"
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.95 }}
-    >
-      <span>{label}</span>
-    </motion.button>
-  )
-}
+import { forwardRef } from 'react'
+
+const ShareCard = forwardRef<HTMLDivElement, { personality: Personality }>(
+  ({ personality }, ref) => {
+    return (
+      <div
+        ref={ref}
+        style={{
+          width: 540,
+          height: 960,
+          padding: 48,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          background: `linear-gradient(180deg, ${personality.color}18 0%, #ffffff 40%, #ffffff 60%, ${personality.color}10 100%)`,
+          fontFamily: "'DM Sans', system-ui, sans-serif",
+          position: 'relative',
+        }}
+      >
+        {/* Top section */}
+        <div style={{ textAlign: 'center', marginTop: 16 }}>
+          <p style={{
+            fontSize: 13,
+            fontWeight: 700,
+            textTransform: 'uppercase',
+            letterSpacing: '0.2em',
+            color: '#999',
+            marginBottom: 12,
+          }}>
+            My Cocktail Personality
+          </p>
+          <div style={{ fontSize: 72, marginBottom: 8 }}>
+            {personality.emoji}
+          </div>
+          <h1 style={{
+            fontSize: 40,
+            fontWeight: 700,
+            color: personality.color,
+            margin: '0 0 8px 0',
+            lineHeight: 1.1,
+            fontFamily: "'Fredoka', 'DM Sans', system-ui, sans-serif",
+          }}>
+            {personality.name}
+          </h1>
+          <p style={{
+            fontSize: 16,
+            fontStyle: 'italic',
+            color: '#666',
+            margin: 0,
+          }}>
+            "{personality.tagline}"
+          </p>
+        </div>
+
+        {/* Traits */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: '1fr 1fr',
+          gap: 10,
+          width: '100%',
+          padding: '0 8px',
+        }}>
+          {personality.traits.map((trait) => (
+            <div
+              key={trait}
+              style={{
+                background: '#fff',
+                border: `1.5px solid ${personality.color}30`,
+                borderRadius: 14,
+                padding: '12px 8px',
+                textAlign: 'center',
+                fontSize: 14,
+                fontWeight: 600,
+                color: '#333',
+              }}
+            >
+              {trait}
+            </div>
+          ))}
+        </div>
+
+        {/* Can image + drink name */}
+        <div style={{ textAlign: 'center' }}>
+          <img
+            src={personality.image}
+            alt={personality.matchedDrink}
+            style={{ width: 140, height: 'auto', marginBottom: 8 }}
+            crossOrigin="anonymous"
+          />
+          <p style={{
+            fontSize: 22,
+            fontWeight: 700,
+            color: personality.color,
+            margin: 0,
+            fontFamily: "'Fredoka', 'DM Sans', system-ui, sans-serif",
+          }}>
+            {personality.matchedDrink}
+          </p>
+        </div>
+
+        {/* Footer */}
+        <div style={{ textAlign: 'center' }}>
+          <p style={{
+            fontSize: 14,
+            color: '#999',
+            margin: '0 0 4px 0',
+          }}>
+            Find yours at
+          </p>
+          <p style={{
+            fontSize: 16,
+            fontWeight: 700,
+            color: personality.color,
+            margin: 0,
+          }}>
+            web.designercocktails.co.uk
+          </p>
+        </div>
+      </div>
+    )
+  }
+)
+
+ShareCard.displayName = 'ShareCard'
