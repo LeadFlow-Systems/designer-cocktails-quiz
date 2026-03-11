@@ -303,8 +303,18 @@ const ShareCard = forwardRef<HTMLDivElement, { personality: Personality }>(
           position: 'relative',
         }}
       >
-        {/* Top section */}
+        {/* Logo + header */}
         <div style={{ textAlign: 'center', marginTop: 16 }}>
+          <p style={{
+            fontSize: 20,
+            fontWeight: 700,
+            color: '#00b7c3',
+            letterSpacing: '0.08em',
+            margin: '0 0 4px 0',
+            fontFamily: "'Fredoka', 'DM Sans', system-ui, sans-serif",
+          }}>
+            DESIGNER COCKTAILS
+          </p>
           <p style={{
             fontSize: 13,
             fontWeight: 700,
@@ -385,19 +395,27 @@ const ShareCard = forwardRef<HTMLDivElement, { personality: Personality }>(
         </div>
 
         {/* Footer */}
-        <div style={{ textAlign: 'center' }}>
+        <div style={{
+          textAlign: 'center',
+          background: '#00b7c3',
+          margin: '0 -48px -48px -48px',
+          padding: '20px 48px',
+          width: 'calc(100% + 96px)',
+        }}>
           <p style={{
-            fontSize: 14,
-            color: '#999',
+            fontSize: 15,
+            color: '#ffffff',
             margin: '0 0 4px 0',
+            fontWeight: 500,
           }}>
-            Find yours at
+            Find your cocktail personality at
           </p>
           <p style={{
-            fontSize: 16,
+            fontSize: 18,
             fontWeight: 700,
-            color: personality.color,
+            color: '#ffffff',
             margin: 0,
+            letterSpacing: '0.02em',
           }}>
             web.designercocktails.co.uk
           </p>
