@@ -30,17 +30,12 @@ function trackEvent(event: string, params?: Record<string, string | number>) {
   window.gtag('event', event, params)
 }
 
-// Funnel events
+// Funnel: started → answered (x8) → completed → shop/share
 export const analytics = {
   quizStarted: () => trackEvent('quiz_started'),
 
-  questionViewed: (questionIndex: number) =>
-    trackEvent('question_viewed', { question_number: questionIndex + 1 }),
-
   questionAnswered: (questionIndex: number) =>
     trackEvent('question_answered', { question_number: questionIndex + 1 }),
-
-  emailScreenViewed: () => trackEvent('email_screen_viewed'),
 
   quizCompleted: (personalityName: string, matchedDrink: string) =>
     trackEvent('quiz_completed', {
@@ -48,10 +43,7 @@ export const analytics = {
       matched_drink: matchedDrink,
     }),
 
-  shopClicked: (personalityName: string) =>
-    trackEvent('shop_clicked', { personality_name: personalityName }),
-
-  retakeClicked: () => trackEvent('retake_clicked'),
+  shopClicked: () => trackEvent('shop_clicked'),
 
   shareClicked: (method: string) =>
     trackEvent('share_clicked', { method }),

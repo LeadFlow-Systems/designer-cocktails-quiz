@@ -31,21 +31,14 @@ function App() {
   useEffect(() => {
     if (state.screen === 'question' && state.currentQuestion !== prevQuestion.current) {
       analytics.questionAnswered(prevQuestion.current)
-      analytics.questionViewed(state.currentQuestion)
       prevQuestion.current = state.currentQuestion
     }
     if (state.screen !== prevScreen.current) {
       if (state.screen === 'question' && prevScreen.current === 'welcome') {
         analytics.quizStarted()
-        analytics.questionViewed(0)
       }
       if (state.screen === 'email') {
         analytics.questionAnswered(state.currentQuestion)
-        analytics.emailScreenViewed()
-      }
-      if (state.screen === 'result' && state.result) {
-        const p = personalities[state.result]
-        analytics.quizCompleted(p.name, p.matchedDrink)
       }
       prevScreen.current = state.screen
     }
@@ -68,6 +61,7 @@ function App() {
     })
 
     if (result.success) {
+      analytics.quizCompleted(personality.name, personality.matchedDrink)
       submitEmailSuccess()
     } else {
       submitEmailError()

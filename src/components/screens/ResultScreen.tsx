@@ -117,12 +117,11 @@ function ResultHeader({ phase, personality }: { phase: string; personality: Pers
 
 function ResultDetails({ personality, onRestart }: ResultScreenProps) {
   const handleShop = () => {
-    analytics.shopClicked(personality.name)
+    analytics.shopClicked()
     window.open('https://designercocktails.co.uk/product/canned-cocktails-bundle/', '_blank')
   }
 
   const handleRetake = () => {
-    analytics.retakeClicked()
     onRestart()
   }
 
