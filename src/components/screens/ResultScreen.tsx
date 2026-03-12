@@ -309,14 +309,19 @@ const ShareCard = forwardRef<HTMLDivElement, { personality: Personality }>(
         <div style={{
           width: '100%',
           background: `linear-gradient(135deg, ${personality.color} 0%, ${personality.color}dd 100%)`,
-          padding: '28px 40px 24px',
+          padding: '24px 40px 20px',
           textAlign: 'center',
         }}>
-          <img
-            src={BRAND_LOGO_PNG_URI}
-            alt="Designer Cocktails"
-            style={{ width: 200, height: 'auto', marginBottom: 16, filter: 'brightness(0) invert(1)' }}
-          />
+          <div style={{
+            fontSize: 28,
+            fontWeight: 700,
+            color: '#ffffff',
+            fontFamily: "'Fredoka', 'DM Sans', system-ui, sans-serif",
+            marginBottom: 8,
+            letterSpacing: '0.02em',
+          }}>
+            Designer Cocktails
+          </div>
           <p style={{
             fontSize: 12,
             fontWeight: 600,
@@ -336,16 +341,16 @@ const ShareCard = forwardRef<HTMLDivElement, { personality: Personality }>(
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'space-between',
-          padding: '24px 36px 0',
+          padding: '20px 36px 0',
           width: '100%',
         }}>
           {/* Emoji + Name + Tagline */}
           <div style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: 56, marginBottom: 4 }}>
+            <div style={{ fontSize: 48, marginBottom: 4 }}>
               {personality.emoji}
             </div>
             <h1 style={{
-              fontSize: 36,
+              fontSize: 32,
               fontWeight: 700,
               color: personality.color,
               margin: '0 0 6px 0',
@@ -355,19 +360,25 @@ const ShareCard = forwardRef<HTMLDivElement, { personality: Personality }>(
               {personality.name}
             </h1>
             <p style={{
-              fontSize: 15,
+              fontSize: 14,
               fontStyle: 'italic',
               color: '#666',
-              margin: '0 0 10px 0',
+              margin: '0 0 12px 0',
             }}>
               "{personality.tagline}"
             </p>
+          </div>
+
+          {/* Description - separated with breathing room */}
+          <div style={{
+            textAlign: 'center',
+            padding: '0 16px',
+          }}>
             <p style={{
               fontSize: 13,
               color: '#555',
               margin: 0,
-              lineHeight: 1.5,
-              padding: '0 12px',
+              lineHeight: 1.6,
             }}>
               {personality.description}
             </p>
@@ -389,8 +400,8 @@ const ShareCard = forwardRef<HTMLDivElement, { personality: Personality }>(
                   background: `${personality.color}12`,
                   border: `1.5px solid ${personality.color}30`,
                   borderRadius: 20,
-                  padding: '8px 16px',
-                  fontSize: 13,
+                  padding: '6px 14px',
+                  fontSize: 12,
                   fontWeight: 600,
                   color: personality.color,
                 }}
@@ -410,11 +421,11 @@ const ShareCard = forwardRef<HTMLDivElement, { personality: Personality }>(
             <img
               src={personality.image}
               alt={personality.matchedDrink}
-              style={{ width: 200, height: 'auto', marginBottom: 8 }}
+              style={{ width: 160, height: 'auto', marginBottom: 6 }}
               crossOrigin="anonymous"
             />
             <p style={{
-              fontSize: 13,
+              fontSize: 12,
               fontWeight: 600,
               textTransform: 'uppercase',
               letterSpacing: '0.15em',
@@ -424,7 +435,7 @@ const ShareCard = forwardRef<HTMLDivElement, { personality: Personality }>(
               Your Perfect Match
             </p>
             <p style={{
-              fontSize: 22,
+              fontSize: 20,
               fontWeight: 700,
               color: personality.color,
               margin: 0,
@@ -440,7 +451,7 @@ const ShareCard = forwardRef<HTMLDivElement, { personality: Personality }>(
           textAlign: 'center',
           background: `${personality.color}10`,
           borderTop: `2px solid ${personality.color}20`,
-          padding: '14px 40px',
+          padding: '12px 40px',
           width: '100%',
         }}>
           <p style={{
