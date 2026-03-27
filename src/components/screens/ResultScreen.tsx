@@ -15,6 +15,13 @@ export function ResultScreen({ personality, onRestart }: ResultScreenProps) {
   const [phase, setPhase] = useState<'burst' | 'reveal' | 'details'>('burst')
 
   useEffect(() => {
+    // Fire Meta Pixel event when quiz is completed
+    if (typeof window.fbq === 'function') {
+      window.fbq('track', 'CompleteRegistration', {
+        content_name: personality.name,
+      })
+    }
+
     const t1 = setTimeout(() => setPhase('reveal'), 800)
     const t2 = setTimeout(() => setPhase('details'), 2000)
     return () => {
